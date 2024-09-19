@@ -1,0 +1,19 @@
+---
+- name: Deploy Webapp on tomcat server
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Delete /opt/tomcat8/webapps/webapp
+      ansible.builtin.file:
+        path: /opt/tomcat8/webapps/webapp
+        state: absent
+
+    - name: Delete /opt/tomcat8/webapps/webapp.war
+      ansible.builtin.file:
+        path: /opt/tomcat8/webapps/webapp.war
+        state: absent
+
+    - name: Copy target/webapp.war to /opt/tomcat8/webapps/
+      ansible.builtin.copy:
+        src: target/webapp.war
+        dest: /opt/tomcat8/webapps/
